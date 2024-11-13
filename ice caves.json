@@ -1,0 +1,38 @@
+{
+    "ListName": "ice caves",
+    "DepartDate": "01/18/2025",
+    "ReturnDate": "01/21/2025",
+    "Destination": "Bayfield, WI",
+    "ListContents": [
+        {
+            "ItemName": "warm layers",
+            "ItemCategory": "clothes",
+            "ItemLocation": "backpack",
+            "Packed": false
+        },
+        {
+            "ItemName": "winter jacket",
+            "ItemCategory": "",
+            "ItemLocation": "wearing",
+            "Packed": false
+        },
+        {
+            "ItemName": "boots",
+            "ItemCategory": "",
+            "ItemLocation": "duffel bag",
+            "Packed": false
+        },
+        {
+            "ItemName": "hot hands",
+            "ItemCategory": "",
+            "ItemLocation": "backpack",
+            "Packed": false
+        },
+        {
+            "ItemName": "state park sticker",
+            "ItemCategory": "",
+            "ItemLocation": "on car",
+            "Packed": false
+        }
+    ]
+}
