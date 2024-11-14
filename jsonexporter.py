@@ -1,5 +1,6 @@
 from pdfdocument.document import PDFDocument
-import json
+import json, smtplib
+from email.message import EmailMessage
 
 packing_list = "packinglist.json"
 #import the packing list json filename through ZeroMQ. packinglist.json is a placeholder for now
@@ -18,14 +19,19 @@ def exportPdf(filename):
     pdf.h3(f"Return date: {imported_list["ReturnDate"]}")
     pdf.h3(f"Destination: {imported_list["Destination"]}")
     nested_list_contents = imported_list["ListContents"]
+    pdf.spacer()
     pdf.h3("Your Items:")
     pdf.spacer()
 
-    pdf.p(nested_list_contents)
-    # for index, item in enumerate(nested_list_contents):
-    #     pdf.p(f"{index}. {nested_list_contents[0]}\nCategory: {nested_list_contents[1]}\nLocation: {nested_list_contents[2]}\nPacked? {nested_list_contents[3]}")
+    for index, item in enumerate(nested_list_contents):
+        pdf.p(f"{index}. {nested_list_contents[index]["ItemName"]}\nCategory: {nested_list_contents[index]["ItemCategory"]}\nLocation: {nested_list_contents[index]["ItemLocation"]}\nPacked? {nested_list_contents[index]["Packed"]}")
+        pdf.spacer()
 
     pdf.generate()
+
+def exportToEmail():
+    msg = EmailMessage()
+
     
 if __name__ == "__main__":
     exportPdf("test.pdf")
