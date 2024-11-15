@@ -1,9 +1,18 @@
 from pdfdocument.document import PDFDocument
-import json, smtplib
-from email.message import EmailMessage
+from emailer import send_mail
+import json
+import smtplib
+from pathlib import Path
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+from email import encoders
+import time
+import zmq
 
-packing_list = "packinglist.json"
 #import the packing list json filename through ZeroMQ. packinglist.json is a placeholder for now
+packing_list = "packinglist.json"
 
 #load json into a dict
 with open(packing_list) as file:
@@ -28,10 +37,6 @@ def exportPdf(filename):
         pdf.spacer()
 
     pdf.generate()
-
-def exportToEmail():
-    msg = EmailMessage()
-
     
 if __name__ == "__main__":
-    exportPdf("test.pdf")
+    exportPdf("packinglist.pdf")
