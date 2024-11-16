@@ -8,9 +8,9 @@ from email import encoders
 
 
 def sendMail(send_from, send_to, subject, message, pdf,
-              server="localhost", port=587, username='', password='',
+              server="localhost", port=587, password='',
               use_tls=True):
-    """Send an email with the Go Pack! PDF attached. Because Go Pack! sends the email to the user, args send_from, send_to, and username should refer to the same account. """
+    """Send an email with the Go Pack! packing list PDF attached. Because Go Pack! sends the email to the user's own email account, args send_from and send_to should refer to the same account. """
     msg = MIMEMultipart()
     msg['From'] = send_from
     msg['To'] = COMMASPACE.join(send_to)
@@ -29,12 +29,11 @@ def sendMail(send_from, send_to, subject, message, pdf,
     smtp = smtplib.SMTP(server, port)
     if use_tls:
         smtp.starttls()
-    smtp.login(username, password)
+    smtp.login(send_from, password)
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.quit()
 
 # Example usage:
-# pdf_name = "packinglist.pdf"
 # recipient = ["example@mail.com"]
-# sendMail("example@mail.com", recipient, "Go Pack! Test Email", "This is a test email from Go Pack!", pdf_name, "smtp.gmail.com", 587, "example@mail.com", "app_password", True)
+# sendMail("example@mail.com", recipient, "Go Pack! Test Email", "This is a test email from Go Pack!", pdf_name, "smtp.gmail.com", 587, "app_password", True)
 

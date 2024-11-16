@@ -8,7 +8,6 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 from email import encoders
-import time
 import zmq
 
 def exportPdf(filename):
@@ -31,22 +30,26 @@ def exportPdf(filename):
 
     pdf.generate()
     
-# In the case that the name of the json file is passed
 if __name__ == "__main__":
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
 
     while True:
-        #import the packing list json filename through ZeroMQ. packinglist.json is a placeholder for now
-        packing_list = socket.recv()
-        print("Received JSON filename: %s" % packing_list)
+        #receive the packing list json filename, and email login info, through ZeroMQ. 
+        incoming_message = socket.recv_json()
+        print("Received JSON filename: %s" % incoming_message["filename"])
 
-        #load json into a dict
-        with open(packing_list) as file:
+        #load packing list json into a dict
+        with open(incoming_message["filename"]) as file:
             imported_list = json.load(file)
 
         exportPdf(f"{imported_list["ListName"]}.pdf")
         print(f"File {imported_list["ListName"]}.pdf generated")
+
+        if incoming_message["username"] and incoming_message["password"]:
+            username = incoming_message["username"]
+            password = incoming_message["password"]
+            sendMail(username, [username], "Your Go Pack! Packing List", "This is your packing list from Go Pack!", f"{imported_list["ListName"]}.pdf", "smtp.gmail.com", 587, password, True)
 
         socket.send(b"PDF generated.")
