@@ -1,5 +1,5 @@
 from pdfdocument.document import PDFDocument
-from emailer import send_mail
+from emailer import sendMail
 import json
 import smtplib
 from pathlib import Path
@@ -10,13 +10,6 @@ from email.utils import COMMASPACE, formatdate
 from email import encoders
 import time
 import zmq
-
-#import the packing list json filename through ZeroMQ. packinglist.json is a placeholder for now
-packing_list = "packinglist.json"
-
-#load json into a dict
-with open(packing_list) as file:
-    imported_list = json.load(file)
 
 def exportPdf(filename):
     """Creates a pdf from the json file."""
@@ -38,5 +31,22 @@ def exportPdf(filename):
 
     pdf.generate()
     
+# In the case that the name of the json file is passed
 if __name__ == "__main__":
-    exportPdf("packinglist.pdf")
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5555")
+
+    while True:
+        #import the packing list json filename through ZeroMQ. packinglist.json is a placeholder for now
+        packing_list = socket.recv()
+        print("Received JSON filename: %s" % packing_list)
+
+        #load json into a dict
+        with open(packing_list) as file:
+            imported_list = json.load(file)
+
+        exportPdf(f"{imported_list["ListName"]}.pdf")
+        print(f"File {imported_list["ListName"]}.pdf generated")
+
+        socket.send(b"PDF generated.")

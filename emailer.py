@@ -7,23 +7,10 @@ from email.utils import COMMASPACE, formatdate
 from email import encoders
 
 
-def send_mail(send_from, send_to, subject, message, pdf,
+def sendMail(send_from, send_to, subject, message, pdf,
               server="localhost", port=587, username='', password='',
               use_tls=True):
-    """Compose and send email with provided info and attachments.
-
-    Args:
-        send_from (str): from name
-        send_to (list[str]): to name(s)
-        subject (str): message title
-        message (str): message body
-        pdf (str): pdf to be attached to the email
-        server (str): mail server host name
-        port (int): port number
-        username (str): server auth username
-        password (str): server auth password
-        use_tls (bool): use TLS mode
-    """
+    """Send an email with the Go Pack! PDF attached. Because Go Pack! sends the email to the user, args send_from, send_to, and username should refer to the same account. """
     msg = MIMEMultipart()
     msg['From'] = send_from
     msg['To'] = COMMASPACE.join(send_to)
@@ -48,6 +35,6 @@ def send_mail(send_from, send_to, subject, message, pdf,
 
 # Example usage:
 # pdf_name = "packinglist.pdf"
-# recipient = ["examplerecipient@mail.com"]
-# send_mail("example@mail.com", recipient, "Python Test Email", "This is a test email from your Python program.", pdf_name, "smtp.gmail.com", 587, "example@mail.com", "app_password", True)
+# recipient = ["example@mail.com"]
+# sendMail("example@mail.com", recipient, "Go Pack! Test Email", "This is a test email from Go Pack!", pdf_name, "smtp.gmail.com", 587, "example@mail.com", "app_password", True)
 
