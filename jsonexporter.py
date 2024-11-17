@@ -1,14 +1,13 @@
 from pdfdocument.document import PDFDocument
 from emailer import sendMail
-import json
-import smtplib
+import json, smtplib, os, zmq
 from pathlib import Path
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 from email import encoders
-import zmq
+
 
 def exportPdf(filename):
     """Creates a pdf from the json file."""
@@ -52,4 +51,6 @@ if __name__ == "__main__":
             password = incoming_message["password"]
             sendMail(username, [username], "Your Go Pack! Packing List", "This is your packing list from Go Pack!", f"{imported_list["ListName"]}.pdf", "smtp.gmail.com", 587, password, True)
 
-        socket.send(b"PDF generated.")
+            socket.send_string(f"PDF generated. File saved to folder {os.getcwd()}. Emailed to {username}.")
+        else:
+            socket.send_string(f"PDF generated. File saved to folder {os.getcwd()}")
