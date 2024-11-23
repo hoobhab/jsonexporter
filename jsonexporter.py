@@ -30,11 +30,12 @@ if __name__ == "__main__":
     while True:
         #receive the packing list json filename, and email login info, through ZeroMQ. 
         incoming_message = socket.recv_json()
-        print("Received JSON filename: %s" % incoming_message["filename"])
+        imported_list = incoming_message["packing_list"]
+        print("Received JSON object: %s" % imported_list["ListName"])
 
-        #load packing list json into a dict
-        with open(incoming_message["filename"]) as file:
-            imported_list = json.load(file)
+        server = incoming_message["server"]
+        port = incoming_message["port"]
+        list_name = imported_list["ListName"]
 
         exportPdf(f"{imported_list["ListName"]}.pdf")
         print(f"File {imported_list["ListName"]}.pdf generated")
@@ -42,7 +43,7 @@ if __name__ == "__main__":
         if incoming_message["username"] and incoming_message["password"]:
             username = incoming_message["username"]
             password = incoming_message["password"]
-            sendMail(username, [username], "Your Go Pack! Packing List", "This is your packing list from Go Pack!", f"{imported_list["ListName"]}.pdf", "smtp.gmail.com", 587, password, True)
+            sendMail(username, [username], "Your Go Pack! Packing List", "This is your packing list from Go Pack!", f"{list_name}.pdf", server, port, password)
 
             socket.send_string(f"PDF generated. File saved to folder {os.getcwd()}. Emailed to {username}.")
         else:

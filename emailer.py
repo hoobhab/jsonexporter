@@ -8,7 +8,7 @@ from email import encoders
 
 
 def sendMail(send_from, send_to, subject, message, pdf,
-              server="localhost", port=587, password='',
+              server, port, password,
               use_tls=True):
     """Send an email with the Go Pack! packing list PDF attached. 
     Because Go Pack! sends the email to the user's own email account, 
