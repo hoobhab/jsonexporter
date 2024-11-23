@@ -17,8 +17,10 @@ def exportPdf(filename):
     pdf.spacer()
 
     for index, item in enumerate(nested_list_contents):
-        pdf.p(f"{index}. {nested_list_contents[index]["ItemName"]}\nCategory: {nested_list_contents[index]["ItemCategory"]}\nLocation: {nested_list_contents[index]["ItemLocation"]}\nPacked? {nested_list_contents[index]["Packed"]}")
-        pdf.spacer()
+        checkbox = "[×]" if item["Packed"] == True else "[ ]"
+        spacer = "·"
+        list_item = f"{checkbox} {nested_list_contents[index]["ItemName"] :{spacer}<25} Category: {nested_list_contents[index]["ItemCategory"]:{spacer}<25} Location: {nested_list_contents[index]["ItemLocation"]}"
+        pdf.p(list_item)
 
     pdf.generate()
     
