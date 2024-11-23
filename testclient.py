@@ -8,7 +8,8 @@ if __name__ == "__main__":
     socket.connect("tcp://localhost:5555")
     email_user = "hoobhab3@gmail.com"
     email_pw = "itrm iohk vqmw efyu"
-    import_list = json.load("./packinglist.json")
+    with open("packinglist.json") as file:
+        import_list = json.load(file)
     server = "smtp.gmail.com"
     port = 587
 
