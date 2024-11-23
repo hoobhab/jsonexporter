@@ -1,13 +1,6 @@
 from pdfdocument.document import PDFDocument
-from emailer import sendMail
-import json, smtplib, os, zmq
-from pathlib import Path
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
-from email import encoders
-
+from emailer import *
+import json, os, zmq
 
 def exportPdf(filename):
     """Creates a pdf from the json file."""
