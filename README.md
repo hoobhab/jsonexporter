@@ -19,3 +19,10 @@ Using the sendEmail function
 Example usage:
 recipient = ["example@mail.com"]
 sendMail("example@mail.com", recipient, "Go Pack! Test Email", "This is a test email from Go Pack!", pdf_name, "smtp.gmail.com", 587, "app_password", True)
+
+Packages Used
+- smtplib: enables Simple Mail Transfer Protocol for the emailer function.
+- pathlib: handles filesystem paths
+- email: manages email messages
+- zmq: message queueing service [Link](https://zeromq.org/)
+- pdfdocument: provides a framework for creating PDFs with methods similar to html [Link](https://github.com/matthiask/pdfdocument/)
