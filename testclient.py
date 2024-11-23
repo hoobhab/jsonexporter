@@ -7,7 +7,7 @@ if __name__ == "__main__":
     socket = context.socket(zmq.REQ)
     socket.connect("tcp://localhost:5555")
     email_user = "hoobhab3@gmail.com"
-    email_pw = "itrm iohk vqmw efyu"
+    email_pw = "examplepassword"
     with open("packinglist.json") as file:
         import_list = json.load(file)
     server = "smtp.gmail.com"
