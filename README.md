@@ -15,7 +15,7 @@ message = socket.recv()
 
 ![uml](https://github.com/user-attachments/assets/5382e5bd-92d1-45f9-8687-f88d71504a9c)
 
-Using the sendEmail function
+Using the sendEmail function <br>
 Example usage: <br>
 recipient = ["example@mail.com"]
 sendMail("example@mail.com", recipient, "Go Pack! Test Email", "This is a test email from Go Pack!", pdf_name, "smtp.gmail.com", 587, "app_password", True)
