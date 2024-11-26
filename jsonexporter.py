@@ -19,7 +19,8 @@ def exportPdf(filename):
     for index, item in enumerate(nested_list_contents):
         checkbox = "[×]" if item["Packed"] == True else "[ ]"
         spacer = "·"
-        list_item = f"{checkbox} {nested_list_contents[index]["ItemName"] :{spacer}<25} Category: {nested_list_contents[index]["ItemCategory"]:{spacer}<25} Location: {nested_list_contents[index]["ItemLocation"]}"
+        list_item = f"{checkbox} {nested_list_contents[index]["ItemName"] :{spacer}<25} \
+        Category: {nested_list_contents[index]["ItemCategory"]:{spacer}<25} Location: {nested_list_contents[index]["ItemLocation"]}"
         pdf.p(list_item)
 
     pdf.generate()
@@ -45,7 +46,8 @@ if __name__ == "__main__":
         if incoming_message["username"] and incoming_message["password"]:
             username = incoming_message["username"]
             password = incoming_message["password"]
-            sendMail(username, [username], "Your Go Pack! Packing List", "This is your packing list from Go Pack!", f"{list_name}.pdf", server, port, password)
+            sendMail(username, [username], "Your Go Pack! Packing List", 
+            "This is your packing list from Go Pack!", f"{list_name}.pdf", server, port, password)
 
             socket.send_string(f"PDF generated. File saved to folder {os.getcwd()}. Emailed to {username}.")
         else:
